@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="wclassth=device-wclassth, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <style>
+	    body
+	    {
+		    background-color:black;
+	    }
+      .fb {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .btn {
+        height: 3rem;
+        width: 20rem;
+        margin: 1rem;
+      background-color:grey;
+	      color:white;
+	      
+      }
+      .btn:hover {
+        cursor: grab;
+      }
+    </style>
+    <script>
+      function f1() {
+        const txt= `// EuclidAlgorithms.cpp
+#include <iostream>
+using namespace std;
+
+int gcd(int a, int b) {
+    return (b == 0) ? a : gcd(b, a % b);
+}
+
+int extendedGCD(int a, int b, int &x, int &y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    int x1, y1;
+    int g = extendedGCD(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - (a / b) * y1;
+    return g;
+}
+
+int main() {
+    int a = 30, b = 20;
+    cout << "GCD of " << a << " and " << b << " is: " << gcd(a, b) << endl;
+    
+    int x, y;
+    int g = extendedGCD(a, b, x, y);
+    cout << "Using Extended Euclidean Algorithm:\n";
+    cout << "GCD: " << g << ", x: " << x << ", y: " << y << endl;
+    return 0;
+}
+`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+
+      }
+
+      function f2() {
+        const txt= `// LetterFrequency.cpp
+#include <iostream>
+#include <fstream>
+#include <cctype>
+using namespace std;
+
+int main() {
+    int freq[26] = {0};
+    ifstream file("input.txt");
+    
+    if (!file.is_open()) {
+        cerr << "File not found. Please make sure 'input.txt' exists.\n";
+        return 1;
+    }
+
+    string line;
+    while (getline(file, line)) {
+        for (char ch : line) {
+            ch = tolower(ch);
+            if (isalpha(ch)) {
+                freq[ch - 'a']++;
+            }
+        }
+    }
+
+    cout << "Letter frequencies in file:\n";
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {
+            cout << (char)('a' + i) << ": " << freq[i] << endl;
+        }
+    }
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f3() {
+        const txt= `// CaesarCipher.cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+string encrypt(string text, int shift) {
+    string result;
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = islower(c) ? 'a' : 'A';
+            result += (c - base + shift) % 26 + base;
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+
+string decrypt(string text, int shift) {
+    return encrypt(text, 26 - shift);
+}
+
+int main() {
+    string message;
+    int key;
+    
+    cout << "Enter message: ";
+    getline(cin, message);
+    cout << "Enter shift (key): ";
+    cin >> key;
+    
+    string encrypted = encrypt(message, key);
+    cout << "Encrypted (Sender Side): " << encrypted << endl;
+    cout << "Decrypted (Receiver Side): " << decrypt(encrypted, key) << endl;
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f4() {
+        const txt= `// ColumnarCipher.cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+string encrypt(string message, string key) {
+    int cols = key.length();
+    int rows = ceil((double)message.length() / cols);
+    vector<vector<char>> grid(rows, vector<char>(cols, '\0'));
+    
+    int idx = 0;
+    for (int i = 0; i < rows && idx < message.length(); i++) {
+        for (int j = 0; j < cols && idx < message.length(); j++) {
+            grid[i][j] = message[idx++];
+        }
+    }
+    
+    string encrypted;
+    for (char k : key) {
+        int col = k - '1'; // Assuming key is numeric characters
+        for (int i = 0; i < rows; i++) {
+            if (grid[i][col] != '\0') {
+                encrypted += grid[i][col];
+            }
+        }
+    }
+    return encrypted;
+}
+
+int main() {
+    string message, key;
+    cout << "Enter message: ";
+    getline(cin, message);
+    cout << "Enter key (e.g. 1234): ";
+    cin >> key;
+    
+    string encrypted = encrypt(message, key);
+    cout << "Encrypted Message: " << encrypted << endl;
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f5() {
+        const txt= `// Radix64.cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+const string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+string encode(string input) {
+    string result;
+    vector<unsigned char> bytes(input.begin(), input.end());
+    int i = 0;
+    
+    while (i < bytes.size()) {
+        int b = (bytes[i++] & 0xff) << 16;
+        if (i < bytes.size()) b |= (bytes[i++] & 0xff) << 8;
+        if (i < bytes.size()) b |= (bytes[i++] & 0xff);
+        
+        for (int j = 18; j >= 0; j -= 6) {
+            result += base64_chars[(b >> j) & 0x3f];
+        }
+    }
+    
+    while (result.size() % 4 != 0) result += '=';
+    return result;
+}
+
+int main() {
+    string input = "HelloJava";
+    string encoded = encode(input);
+    cout << "Encoded: " << encoded << endl;
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f6() {
+        const txt= `// RSA.cpp
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int p = 3, q = 11;
+    int n = p * q;
+    int phi = (p-1)*(q-1);
+    int e = 7, d = 3;
+    int msg = 4;
+    
+    int enc = (int)pow(msg, e) % n;
+    int dec = (int)pow(enc, d) % n;
+    
+    cout << "Original Message: " << msg << endl
+         << "Encrypted Message: " << enc << endl
+         << "Decrypted Message: " << dec << endl;
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f7() {
+        const txt= `// DiffieHellman.cpp (Requires GMP library)
+#include <iostream>
+#include <gmpxx.h>
+using namespace std;
+
+int main() {
+    mpz_class p("23"), g("9");
+    mpz_class a("6"), b("15");  // Private keys
+
+    // Public keys
+    mpz_class A, B;
+    mpz_powm(A.get_mpz_t(), g.get_mpz_t(), a.get_mpz_t(), p.get_mpz_t());
+    mpz_powm(B.get_mpz_t(), g.get_mpz_t(), b.get_mpz_t(), p.get_mpz_t());
+
+    // Shared secrets
+    mpz_class secretA, secretB;
+    mpz_powm(secretA.get_mpz_t(), B.get_mpz_t(), a.get_mpz_t(), p.get_mpz_t());
+    mpz_powm(secretB.get_mpz_t(), A.get_mpz_t(), b.get_mpz_t(), p.get_mpz_t());
+
+    cout << "Alice's Public Key (A): " << A << endl
+         << "Bob's Public Key (B): " << B << endl
+         << "Shared Secret (Alice): " << secretA << endl
+         << "Shared Secret (Bob): " << secretB << endl;
+
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f8() {
+        const txt= `// DigitalSignature.cpp (Requires OpenSSL)
+#include <iostream>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+
+using namespace std;
+
+void handleErrors() {
+    ERR_print_errors_fp(stderr);
+    abort();
+}
+
+int main() {
+    OpenSSL_add_all_algorithms();
+    ERR_load_crypto_strings();
+
+    // Generate RSA key pair
+    RSA *rsa = RSA_new();
+    BIGNUM *bn = BN_new();
+    BN_set_word(bn, RSA_F4);
+    RSA_generate_key_ex(rsa, 2048, bn, nullptr);
+
+    // Message to sign
+    const char* msg = "Hello, this is a message!";
+    unsigned char sig[4096];
+    unsigned int sig_len;
+    
+    // Sign message
+    EVP_PKEY* pkey = EVP_PKEY_new();
+    EVP_PKEY_assign_RSA(pkey, rsa);
+    EVP_MD_CTX* ctx = EVP_MD_CTX_new();
+    EVP_DigestSignInit(ctx, nullptr, EVP_sha256(), nullptr, pkey);
+    EVP_DigestSignUpdate(ctx, msg, strlen(msg));
+    EVP_DigestSignFinal(ctx, sig, &sig_len);
+    cout << "Signature created (" << sig_len << " bytes)\n";
+
+    // Verify signature
+    EVP_DigestVerifyInit(ctx, nullptr, EVP_sha256(), nullptr, pkey);
+    EVP_DigestVerifyUpdate(ctx, msg, strlen(msg));
+    int verified = EVP_DigestVerifyFinal(ctx, sig, sig_len);
+    cout << "Signature valid? " << (verified == 1 ? "true" : "false") << endl;
+
+    // Cleanup
+    EVP_MD_CTX_free(ctx);
+    EVP_PKEY_free(pkey);
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+      function f9() {
+        const txt= `// PGPEmail.cpp (Requires OpenSSL and Base64 encoding)
+#include <iostream>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/bio.h>
+#include <openssl/evp.h>
+
+using namespace std;
+
+string base64_encode(const string &input) {
+    BIO *bio, *b64;
+    BUF_MEM *bufferPtr;
+    b64 = BIO_new(BIO_f_base64());
+    bio = BIO_new(BIO_s_mem());
+    bio = BIO_push(b64, bio);
+    
+    BIO_write(bio, input.c_str(), input.length());
+    BIO_flush(bio);
+    BIO_get_mem_ptr(bio, &bufferPtr);
+    
+    string result(bufferPtr->data, bufferPtr->length);
+    BIO_free_all(bio);
+    return result;
+}
+
+int main() {
+    // Generate RSA key pair
+    RSA *rsa = RSA_generate_key(2048, RSA_F4, nullptr, nullptr);
+    
+    // Original message
+    string msg = "Hello, this is a secure email!";
+    unsigned char encrypted[4096], decrypted[4096];
+    
+    // Encrypt with public key
+    int enc_len = RSA_public_encrypt(msg.size(), 
+                    (unsigned char*)msg.c_str(), 
+                    encrypted, 
+                    rsa, 
+                    RSA_PKCS1_OAEP_PADDING);
+    string b64_enc = base64_encode(string((char*)encrypted, enc_len));
+    cout << "Encrypted Email:\n" << b64_enc << endl;
+
+    // Decrypt with private key
+    int dec_len = RSA_private_decrypt(enc_len, 
+                    encrypted, 
+                    decrypted, 
+                    rsa, 
+                    RSA_PKCS1_OAEP_PADDING);
+    cout << "\nDecrypted Email:\n" << string((char*)decrypted, dec_len) << endl;
+
+    RSA_free(rsa);
+    return 0;
+}`;
+        navigator.clipboard.writeText(txt);
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+
+      }
+
+
+
+
+        
+      
+    </script>
+  </head>
+  <body>
+    <div class="fb">
+      <button class="btn" onclick="f1()">Euclid</button>
+      <button class="btn" onclick="f2()">Letter frequency</button>
+      <button class="btn" onclick="f3()">Ceaser cipher</button>
+      <button class="btn" onclick="f4()">columnnar cipher</button>
+      <button class="btn" onclick="f5()">radix 64</button>
+      <button class="btn" onclick="f6()">rsa</button>
+      <button class="btn" onclick="f7()">diffe hellman</button>
+      <button class="btn" onclick="f8()">digital signature</button>
+      <button class="btn" onclick="f9()">pgp email</button>
+ 
+      
+    </div>
+  </body>
+</html>
