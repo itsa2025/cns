@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="wclassth=device-wclassth, initial-scale=1.0"
-    />
-    <title>Document</title>
-    <style>
-	    body
-	    {
-		    background-color:black;
-	    }
-      .fb {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .btn {
-        height: 3rem;
-        width: 20rem;
-        margin: 1rem;
-      background-color:grey;
-	      color:white;
-	      
-      }
-      .btn:hover {
-        cursor: grab;
-      }
-    </style>
-    <script>
-      function f1() {
-        const txt= `// EuclidAlgorithms.cpp
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    h1 {
+      color: white;
+    }
+
+    .fb {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      height: 3rem;
+      width: 20rem;
+      margin: 1rem;
+      background-color: grey;
+      color: white;
+
+    }
+
+    .btn:hover {
+      cursor: grab;
+    }
+  </style>
+  <script>
+    function f1() {
+      const txt = `// EuclidAlgorithms.cpp
 #include <iostream>
 using namespace std;
 
@@ -63,20 +67,23 @@ int main() {
     return 0;
 }
 `;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f2() {
-        const txt= `// LetterFrequency.cpp
+    function f2() {
+      const txt = `// LetterFrequency.cpp
+// LetterFrequency.cpp
 #include <iostream>
 #include <fstream>
 #include <cctype>
+#include <iomanip> 
 using namespace std;
 
 int main() {
     int freq[26] = {0};
+    int count=0;
     ifstream file("input.txt");
     
     if (!file.is_open()) {
@@ -91,66 +98,26 @@ int main() {
             if (isalpha(ch)) {
                 freq[ch - 'a']++;
             }
+            count++;
         }
     }
 
     cout << "Letter frequencies in file:\n";
     for (int i = 0; i < 26; i++) {
+        float per = (float(freq[i])/count)*100;
         if (freq[i] > 0) {
-            cout << (char)('a' + i) << ": " << freq[i] << endl;
+            cout << (char)('a' + i) << ": " << freq[i] <<", "<<"percentage:"<<setprecision(2)<<per<<"%"<< endl;
         }
     }
     return 0;
 }`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
-
-      function f3() {
-        const txt= `// CaesarCipher.cpp
-#include <iostream>
-#include <string>
-using namespace std;
-
-string encrypt(string text, int shift) {
-    string result;
-    for (char c : text) {
-        if (isalpha(c)) {
-            char base = islower(c) ? 'a' : 'A';
-            result += (c - base + shift) % 26 + base;
-        } else {
-            result += c;
-        }
     }
-    return result;
-}
 
-string decrypt(string text, int shift) {
-    return encrypt(text, 26 - shift);
-}
-
-int main() {
-    string message;
-    int key;
-    
-    cout << "Enter message: ";
-    getline(cin, message);
-    cout << "Enter shift (key): ";
-    cin >> key;
-    
-    string encrypted = encrypt(message, key);
-    cout << "Encrypted (Sender Side): " << encrypted << endl;
-    cout << "Decrypted (Receiver Side): " << decrypt(encrypted, key) << endl;
-    return 0;
-}`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
-
-      }
-
-      function f4() {
-        const txt= `// ColumnarCipher.cpp
+    function f4() {
+      const txt = `// ColumnarCipher.cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -192,13 +159,13 @@ int main() {
     cout << "Encrypted Message: " << encrypted << endl;
     return 0;
 }`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f5() {
-        const txt= `// Radix64.cpp
+    function f5() {
+      const txt = `// Radix64.cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -231,71 +198,235 @@ int main() {
     cout << "Encoded: " << encoded << endl;
     return 0;
 }`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f6() {
-        const txt= `// RSA.cpp
+    function f6() {
+      const txt = `// RSA.cpp
 #include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 #include <cmath>
+
 using namespace std;
 
-int main() {
-    int p = 3, q = 11;
+// Check if number is prime
+bool is_prime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i <= sqrt(n); ++i)
+        if (n % i == 0) return false;
+    return true;
+}
+
+// Calculate GCD
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Modular Inverse (Brute force)
+int modinv(int a, int m) {
+    for (int x = 1; x < m; ++x)
+        if ((a * x) % m == 1)
+            return x;
+    return -1;
+}
+
+// Modular exponentiation
+long long mod_pow(long long base, long long exp, long long mod) {
+    long long result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp % 2 == 1)
+            result = (result * base) % mod;
+        exp /= 2;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+
+// Generate RSA Keys
+void generate_keys(pair<int, int> &pub, pair<int, int> &priv) {
+    vector<int> primes;
+    for (int i = 100; i < 300; ++i) {
+        if (is_prime(i))
+            primes.push_back(i);
+    }
+
+    srand(time(0));
+    int p = primes[rand() % primes.size()];
+    int q = primes[rand() % primes.size()];
+    while (q == p) {
+        q = primes[rand() % primes.size()];
+    }
+
     int n = p * q;
-    int phi = (p-1)*(q-1);
-    int e = 7, d = 3;
-    int msg = 4;
-    
-    int enc = (int)pow(msg, e) % n;
-    int dec = (int)pow(enc, d) % n;
-    
-    cout << "Original Message: " << msg << endl
-         << "Encrypted Message: " << enc << endl
-         << "Decrypted Message: " << dec << endl;
+    int phi = (p - 1) * (q - 1);
+
+    int e = 2 + rand() % (phi - 2);
+    while (gcd(e, phi) != 1) {
+        e = 2 + rand() % (phi - 2);
+    }
+
+    int d = modinv(e, phi);
+
+    pub = {e, n};
+    priv = {d, n};
+}
+
+// Encrypt message
+vector<long long> encrypt(const string &message, pair<int, int> pub) {
+    vector<long long> encrypted;
+    for (char ch : message) {
+        encrypted.push_back(mod_pow((int)ch, pub.first, pub.second));
+    }
+    return encrypted;
+}
+
+// Decrypt message
+string decrypt(const vector<long long> &cipher, pair<int, int> priv) {
+    string decrypted = "";
+    for (auto val : cipher) {
+        decrypted += (char)mod_pow(val, priv.first, priv.second);
+    }
+    return decrypted;
+}
+
+// Main function
+int main() {
+    pair<int, int> public_key, private_key;
+    generate_keys(public_key, private_key);
+
+    cout << "Public Key: (" << public_key.first << ", " << public_key.second << ")" << endl;
+    cout << "Private Key: (" << private_key.first << ", " << private_key.second << ")" << endl;
+
+    string message = "HELLO RSA";
+    vector<long long> encrypted_msg = encrypt(message, public_key);
+
+    cout << "Encrypted: ";
+    for (auto num : encrypted_msg) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    string decrypted_msg = decrypt(encrypted_msg, private_key);
+    cout << "Decrypted: " << decrypted_msg << endl;
+
     return 0;
-}`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+}
+`;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f7() {
-        const txt= `// DiffieHellman.cpp (Requires GMP library)
+    function f7() {
+      const txt = `// DiffieHellman.cpp (Requires GMP library)
 #include <iostream>
-#include <gmpxx.h>
+#include <vector>
+#include <cmath>
+#include <set>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 
+// Function to calculate GCD
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Function to check for prime
+bool is_prime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i <= sqrt(n); ++i)
+        if (n % i == 0) return false;
+    return true;
+}
+
+// Function to find primitive root
+int find_primitive_root(int p) {
+    set<int> required_set;
+    for (int i = 1; i < p; ++i)
+        if (gcd(i, p) == 1)
+            required_set.insert(i);
+
+    for (int g = 2; g < p; ++g) {
+        set<int> actual_set;
+        for (int powers = 1; powers < p; ++powers)
+            actual_set.insert((int)(pow(g, powers)) % p);
+        if (actual_set == required_set)
+            return g;
+    }
+    return -1;
+}
+
+// Function to do modular exponentiation
+int mod_pow(int base, int exp, int mod) {
+    int result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp % 2 == 1)
+            result = (result * base) % mod;
+        exp >>= 1;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+
+// Diffie-Hellman key exchange
+void diffie_hellman() {
+    srand(time(0));
+    int p;
+    do {
+        p = rand() % 100 + 100; // Random number between 100-199
+    } while (!is_prime(p));
+
+    int g = find_primitive_root(p);
+    int a = rand() % (p - 3) + 2;
+    int b = rand() % (p - 3) + 2;
+
+    int A = mod_pow(g, a, p);
+    int B = mod_pow(g, b, p);
+
+    int key_alice = mod_pow(B, a, p);
+    int key_bob = mod_pow(A, b, p);
+
+    cout << "Prime (p): " << p << endl;
+    cout << "Primitive Root (g): " << g << endl;
+    cout << "Alice Private: " << a << endl;
+    cout << "Bob Private: " << b << endl;
+    cout << "Alice Public (A): " << A << endl;
+    cout << "Bob Public (B): " << B << endl;
+    cout << "Shared Key at Alice: " << key_alice << endl;
+    cout << "Shared Key at Bob: " << key_bob << endl;
+}
+
 int main() {
-    mpz_class p("23"), g("9");
-    mpz_class a("6"), b("15");  // Private keys
-
-    // Public keys
-    mpz_class A, B;
-    mpz_powm(A.get_mpz_t(), g.get_mpz_t(), a.get_mpz_t(), p.get_mpz_t());
-    mpz_powm(B.get_mpz_t(), g.get_mpz_t(), b.get_mpz_t(), p.get_mpz_t());
-
-    // Shared secrets
-    mpz_class secretA, secretB;
-    mpz_powm(secretA.get_mpz_t(), B.get_mpz_t(), a.get_mpz_t(), p.get_mpz_t());
-    mpz_powm(secretB.get_mpz_t(), A.get_mpz_t(), b.get_mpz_t(), p.get_mpz_t());
-
-    cout << "Alice's Public Key (A): " << A << endl
-         << "Bob's Public Key (B): " << B << endl
-         << "Shared Secret (Alice): " << secretA << endl
-         << "Shared Secret (Bob): " << secretB << endl;
-
+    diffie_hellman();
     return 0;
-}`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+}
+`;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f8() {
-        const txt= `// DigitalSignature.cpp (Requires OpenSSL)
+    function f8() {
+      const txt = `// DigitalSignature.cpp (Requires OpenSSL)
 #include <iostream>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
@@ -343,13 +474,13 @@ int main() {
     EVP_PKEY_free(pkey);
     return 0;
 }`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
-      }
+    }
 
-      function f9() {
-        const txt= `// PGPEmail.cpp (Requires OpenSSL and Base64 encoding)
+    function f9() {
+      const txt = `// PGPEmail.cpp (Requires OpenSSL and Base64 encoding)
 #include <iostream>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
@@ -389,7 +520,8 @@ int main() {
                     rsa, 
                     RSA_PKCS1_OAEP_PADDING);
     string b64_enc = base64_encode(string((char*)encrypted, enc_len));
-    cout << "Encrypted Email:\n" << b64_enc << endl;
+    cout << "Encrypted Email:
+" << b64_enc << endl;
 
     // Decrypt with private key
     int dec_len = RSA_private_decrypt(enc_len, 
@@ -397,36 +529,765 @@ int main() {
                     decrypted, 
                     rsa, 
                     RSA_PKCS1_OAEP_PADDING);
-    cout << "\nDecrypted Email:\n" << string((char*)decrypted, dec_len) << endl;
+    cout << "
+Decrypted Email:
+" << string((char*)decrypted, dec_len) << endl;
 
     RSA_free(rsa);
     return 0;
 }`;
-        navigator.clipboard.writeText(txt);
-        document.getElementsByTagName('body')[0].style.backgroundColor = 'black';;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
+    }
+    function f10() {
+      const txt = `public class EuclidAlgorithms {
+    static int gcd(int a, int b) {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
+    }
+    static int extendedGCD(int a, int b, int[] xy) {
+        if (b == 0) {
+            xy[0] = 1;
+            xy[1] = 0;
+            return a;
+        }
+        int[] temp = new int[2];
+        int gcd = extendedGCD(b, a % b, temp);
+        xy[0] = temp[1];
+        xy[1] = temp[0] - (a / b) * temp[1];
+        return gcd;
+    }
+    public static void main(String[] args) {
+        int a = 30, b = 20;
+        int resultGCD = gcd(a, b);
+        System.out.println("GCD of " + a + " and " + b + " is: " + resultGCD);
+        int[] xy = new int[2]; 
+        int gcd = extendedGCD(a, b, xy);
+        System.out.println("Using Extended Euclid's Algorithm:");
+        System.out.println("GCD: " + gcd + ", x: " + xy[0] + ", y: " + xy[1]);
+    }
+}
+
+`;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+
+    }
+    function f11() {
+      const txt = `import java.io.File;
+  import java.io.FileNotFoundException;
+  import java.util.Scanner;
+  
+  public class LetterFrequency {
+      public static void main(String[] args) {
+          int[] freq = new int[26];
+          try {
+              File file = new File("CNS\\\\input.txt");
+              Scanner scanner = new Scanner(file);
+  
+              while (scanner.hasNextLine()) {
+                  String line = scanner.nextLine().toLowerCase();
+  
+                  for (char ch : line.toCharArray()) {
+                      if (ch >= 'a' && ch <= 'z') {
+                          freq[ch - 'a']++;
+                      }
+                  }
+              }
+              scanner.close();
+              System.out.println("Letter frequencies in file:");
+              for (int i = 0; i < 26; i++) {
+                  if (freq[i] > 0) {
+                      System.out.println((char) (i + 'a') + " : " + freq[i]);
+                  }
+              }
+          } catch (FileNotFoundException e) {
+              System.out.println("File not found. Please make sure 'input.txt' exists.");
+          }
       }
+  }`;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  }
+  function f12() {
+    const txt = `import java.util.Scanner;
+
+public class CaesarCipher {
+    static String encrypt(String text, int shift) {
+        StringBuilder result = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                result.append((char) ((c - base + shift) % 26 + base));
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+
+    static String decrypt(String text, int shift) {
+        return encrypt(text, 26 - shift);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println();
+        System.out.print("Enter message: ");
+        String message = scanner.nextLine();
+        System.out.print("Enter shift (key): ");
+        int key = scanner.nextInt();
+        String encrypted = encrypt(message, key);
+        System.out.println("Encrypted (Sender Side): " + encrypted);
+        String decrypted = decrypt(encrypted, key);
+        System.out.println("Decrypted (Receiver Side): " + decrypted);
+        scanner.close();
+    }
+}`;
+    navigator.clipboard.writeText(txt);
+    document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+
+function f13() {
+  const txt = `import java.util.Scanner;
+
+public class ColumnarCipher {
+  static String encrypt(String message, String key) {
+      int columns = key.length();
+      int rows = (int) Math.ceil((double) message.length() / columns);
+      char[][] grid = new char[rows][columns];
+      int index = 0;
+      for (int i = 0; i < rows && index < message.length(); i++) {
+          for (int j = 0; j < columns && index < message.length(); j++) {
+              grid[i][j] = message.charAt(index++);
+          }
+      }
+      StringBuilder encrypted = new StringBuilder();
+      for (int k = 1; k <= columns; k++) {
+          int col = key.indexOf((char) (k + '0'));
+          for (int i = 0; i < rows; i++) {
+              if (grid[i][col] != 0)
+                  encrypted.append(grid[i][col]);
+          }
+      }
+      return encrypted.toString();
+  }
+
+  static String decrypt(String encrypted, String key) {
+      int columns = key.length();
+      int rows = (int) Math.ceil((double) encrypted.length() / columns);
+      char[][] grid = new char[rows][columns];
+      int index = 0;
+      for (int k = 1; k <= columns; k++) {
+          int col = key.indexOf((char) (k + '0'));
+          for (int i = 0; i < rows && index < encrypted.length(); i++) {
+              grid[i][col] = encrypted.charAt(index++);
+          }
+      }
+      StringBuilder decrypted = new StringBuilder();
+      for (int i = 0; i < rows; i++) {
+          for (int j = 0; j < columns; j++) {
+              if (grid[i][j] != 0)
+                  decrypted.append(grid[i][j]);
+          }
+      }
+      return decrypted.toString();
+  }
+
+  public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+      System.out.println();
+      System.out.print("Enter message: ");
+      String message = sc.nextLine().replaceAll(" ", "");
+      System.out.print("Enter key (e.g. 4312): ");
+      String key = sc.nextLine();
+      String encrypted = encrypt(message, key);
+      System.out.println("Encrypted Message (Sender Side): " + encrypted);
+      String decrypted = decrypt(encrypted, key);
+      System.out.println("Decrypted Message (Receiver Side): " + decrypted);
+      sc.close();
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+function f14() {
+  const txt = `public class Radix64 {
+  static final String base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+  public static String encode(String input) {
+      StringBuilder result = new StringBuilder();
+      byte[] bytes = input.getBytes();
+      int i = 0;
+      while (i < bytes.length) {
+          int b = (bytes[i++] & 0xff) << 16;
+          if (i < bytes.length)
+              b |= (bytes[i++] & 0xff) << 8;
+          if (i < bytes.length)
+              b |= (bytes[i++] & 0xff);
+          for (int j = 18; j >= 0; j -= 6) {
+              result.append(base64Chars.charAt((b >> j) & 0x3f));
+          }
+      }
+      while (result.length() % 4 != 0) {
+          result.append("=");
+      }
+      return result.toString();
+  }
+
+  public static String decode(String encoded) {
+      encoded = encoded.replace("=", "");
+      byte[] output = new byte[encoded.length() * 3 / 4];
+      int outIndex = 0;
+      int i = 0;
+      while (i < encoded.length()) {
+          int b = base64Chars.indexOf(encoded.charAt(i++)) << 18;
+          b |= base64Chars.indexOf(encoded.charAt(i++)) << 12;
+          int char3 = (i < encoded.length()) ? base64Chars.indexOf(encoded.charAt(i++)) : 0;
+          b |= char3 << 6;
+          int char4 = (i < encoded.length()) ? base64Chars.indexOf(encoded.charAt(i++)) : 0;
+          b |= char4;
+          output[outIndex++] = (byte) ((b >> 16) & 0xff);
+          if (char3 != 0) output[outIndex++] = (byte) ((b >> 8) & 0xff);
+          if (char4 != 0) output[outIndex++] = (byte) (b & 0xff);
+      }
+      return new String(output, 0, outIndex);
+  }
+
+  public static void main(String[] args) {
+      String message = "HelloJava";
+      String encoded = encode(message);
+      System.out.println("Encoded: " + encoded);
+      String decoded = decode(encoded);
+      System.out.println("Decoded: " + decoded);
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+function f15() {
+  const txt = `public class RSA {
+  public static int gcd(int a, int b) {
+      if (b == 0) {
+          return a;
+      }
+      return gcd(b, a % b);
+  }
+
+  public static int select(int e, int n) {
+      for (int i = 0; i < 100; i++) {
+          if ((i * e) % n == 1) {
+              return i;
+          }
+      }
+      return -1;
+  }
+
+  public static void main(String[] args) {
+      int p = 3;  
+      int q = 11; 
+      int n = p * q; 
+      int phi = (p - 1) * (q - 1); 
+      int e = 7; 
+      int gcd = gcd(phi, e);
+
+      if (gcd == 1) {
+          int d = select(e, n);
+          int msg = 4; 
+          int enc = (int) Math.pow(msg, e) % n;
+          int dec = (int) Math.pow(enc, d) % n;
+          System.out.println("Original Message: " + msg);
+          System.out.println("Encrypted Message: " + enc);
+          System.out.println("Decrypted Message: " + dec);
+      } else {
+          System.out.println("Choose e again");
+      }
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+function f16() {
+  const txt = `import java.math.BigInteger;
+
+public class DiffieHellmanMITM {
+  public static void main(String[] args) {
+      BigInteger p = new BigInteger("23"); 
+      BigInteger g = new BigInteger("5"); 
+
+      BigInteger a = new BigInteger("6");  
+      BigInteger b = new BigInteger("15"); 
+      BigInteger m1 = new BigInteger("13");
+      BigInteger m2 = new BigInteger("7"); 
+
+      BigInteger A = g.modPow(a, p);
+      BigInteger B = g.modPow(b, p);
+
+      BigInteger M1 = g.modPow(m1, p); 
+      BigInteger M2 = g.modPow(m2, p);
+
+      System.out.println("Alice sends A = " + A + " → Intercepted!");
+      System.out.println("Bob sends B = " + B + " → Intercepted!");
+
+      System.out.println("Mallory sends M1 to Bob: " + M1);
+      System.out.println("Mallory sends M2 to Alice: " + M2);
+
+      BigInteger keyAlice = M2.modPow(a, p); 
+      BigInteger keyBob = M1.modPow(b, p); 
+      BigInteger keyMalloryWithAlice = A.modPow(m2, p); 
+      BigInteger keyMalloryWithBob = B.modPow(m1, p); 
+
+      System.out.println("\nAlice's key: " + keyAlice);
+      System.out.println("Bob's key: " + keyBob);
+      System.out.println("Mallory Alice key: " + keyMalloryWithAlice);
+      System.out.println("Mallory Bob key: " + keyMalloryWithBob);
+
+      if (!keyAlice.equals(keyBob)) {
+          System.out.println("\nPossible MITM attack detected! Shared keys mismatch.");
+      } else {
+          System.out.println("\nNo MITM detected. Shared keys match.");
+      }
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+
+function f17() {
+  const txt = `import java.security.*;
+
+public class DigitalSignature {
+  public static void main(String[] args) throws Exception {
+      // Generate RSA Key Pair
+      KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+      keyGen.initialize(2048);
+      KeyPair pair = keyGen.generateKeyPair();
+      PrivateKey privateKey = pair.getPrivate();
+      PublicKey publicKey = pair.getPublic();
+
+      // Message to sign
+      String message = "Hello, this is a message!";
+
+      // Sign the message (hash + encrypt hash with private key)
+      Signature sign = Signature.getInstance("SHA256withRSA");
+      sign.initSign(privateKey);
+      sign.update(message.getBytes());
+      byte[] signature = sign.sign();
+      System.out.println("Signature created!");
+
+      // Verify the signature using public key
+      Signature verifySign = Signature.getInstance("SHA256withRSA");
+      verifySign.initVerify(publicKey);
+      verifySign.update(message.getBytes());
+      boolean isCorrect = verifySign.verify(signature);
+      System.out.println("Signature valid? " + isCorrect);
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+function f18() {
+  const txt = `import java.security.*;
+import javax.crypto.Cipher;
+import java.util.Base64;
+
+public class PGPEmail {
+  public static void main(String[] args) throws Exception {
+      // Generate RSA key pair (simulates PGP keys)
+      KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+      keyGen.initialize(2048);
+      KeyPair keyPair = keyGen.generateKeyPair();
+
+      String emailMessage = "Hello, this is a secure email!";
+
+      // Encrypt the message using public key (simulating sending)
+      Cipher encryptCipher = Cipher.getInstance("RSA");
+      encryptCipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
+      byte[] encryptedBytes = encryptCipher.doFinal(emailMessage.getBytes());
+      String encryptedMessage = Base64.getEncoder().encodeToString(encryptedBytes);
+      System.out.println("Encrypted Email:\n" + encryptedMessage);
+
+      // Decrypt the message using private key (simulating receiving)
+      Cipher decryptCipher = Cipher.getInstance("RSA");
+      decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+      byte[] decryptedBytes = decryptCipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
+      String decryptedMessage = new String(decryptedBytes);
+      System.out.println("\nDecrypted Email:\n" + decryptedMessage);
+  }
+}`;
+  navigator.clipboard.writeText(txt);
+  document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+}
+    function f19() {
+      const txt = `
+      def gcd(a, b):
+      while b != 0:
+          a, b = b, a % b
+      return a
+  
+  def extended_gcd(a, b):
+      if a == 0:
+          return b, 0, 1
+      gcd_, x1, y1 = extended_gcd(b % a, a)
+      x = y1 - (b // a) * x1
+      y = x1
+      return gcd_, x, y
+  
+  a = int(input("Enter a: "))
+  b = int(input("Enter b: "))
+  print("GCD (Euclid) =", gcd(a, b))
+  gcd_, x, y = extended_gcd(a, b)
+  print(f"GCD (Extended) = {gcd_}, Coefficients x = {x}, y = {y}")
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f20() {
+      const txt = `from collections import Counter
+  
+  def letter_frequency(file_path):
+      with open(file_path, 'r') as file:
+          text = file.read().lower()
+          count = Counter(c for c in text if c.isalpha())
+          for letter in sorted(count):
+              print(f"{letter}: {count[letter]}")
+  
+  file_name = input("Enter file name: ")
+  letter_frequency(file_name)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f21() {
+      const txt = `def caesar_encrypt(text, shift):
+      result = ""
+      for char in text:
+          if char.isupper():
+              result += chr((ord(char) - 65 + shift) % 26 + 65)
+          elif char.islower():
+              result += chr((ord(char) - 97 + shift) % 26 + 97)
+          else:
+              result += char
+      return result
+  
+  def caesar_decrypt(text, shift):
+      return caesar_encrypt(text, -shift)
+  
+  text = input("Enter text: ")
+  shift = int(input("Enter shift value: "))
+  encrypted = caesar_encrypt(text, shift)
+  decrypted = caesar_decrypt(encrypted, shift)
+  print("Encrypted:", encrypted)
+  print("Decrypted:", decrypted)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f22() {
+      const txt = `def encrypt_message(message, key):
+      cipher = [''] * key
+      for col in range(key):
+          pointer = col
+          while pointer < len(message):
+              cipher[col] += message[pointer]
+              pointer += key
+      return ''.join(cipher)
+  
+  def decrypt_message(ciphertext, key):
+      num_cols = key
+      num_rows = len(ciphertext) // key
+      if len(ciphertext) % key:
+          num_rows += 1
+  
+      plaintext = [''] * num_rows
+      col, row = 0, 0
+  
+      for symbol in ciphertext:
+          plaintext[row] += symbol
+          row += 1
+          if (row == num_rows) or (row == num_rows - 1 and col >= len(ciphertext) % key):
+              row = 0
+              col += 1
+  
+      return ''.join(plaintext)
+  
+  message = input("Enter message: ")
+  key = int(input("Enter key: "))
+  cipher = encrypt_message(message, key)
+  print("Encrypted:", cipher)
+  plain = decrypt_message(cipher, key)
+  print("Decrypted:", plain)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f23() {
+      const txt = `import base64
+  
+  text = input("Enter text to encode: ")
+  encoded = base64.b64encode(text.encode('utf-8')).decode('utf-8')
+  print("Base64 Encoded:", encoded)
+  
+  decoded = base64.b64decode(encoded).decode('utf-8')
+  print("Decoded Back:", decoded)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f24() {
+      const txt = `import random
+  
+  def gcd(a, b):
+      while b != 0:
+          a, b = b, a % b
+      return a
+  
+  def mod_inverse(e, phi):
+      d = 0
+      x1, x2, y1 = 0, 1, 1
+      temp_phi = phi
+  
+      while e > 0:
+          temp1 = temp_phi // e
+          temp2 = temp_phi - temp1 * e
+          temp_phi, e = e, temp2
+  
+          x = x2 - temp1 * x1
+          y = d - temp1 * y1
+  
+          x2, x1 = x1, x
+          d, y1 = y1, y
+  
+      if temp_phi == 1:
+          return d + phi
+  
+  def is_prime(num):
+      if num < 2:
+          return False
+      for i in range(2, int(num**0.5)+1):
+          if num % i == 0:
+              return False
+      return True
+  
+  def generate_keys():
+      p = int(input("Enter first prime number (p): "))
+      q = int(input("Enter second prime number (q): "))
+      if not (is_prime(p) and is_prime(q)):
+          raise ValueError('Both numbers must be prime.')
+      n = p * q
+      phi = (p-1)*(q-1)
+      e = random.randrange(2, phi)
+      while gcd(e, phi) != 1:
+          e = random.randrange(2, phi)
+      d = mod_inverse(e, phi)
+      return ((e, n), (d, n))
+  
+  def encrypt(public_key, plaintext):
+      e, n = public_key
+      cipher = [(ord(char) ** e) % n for char in plaintext]
+      return cipher
+  
+  def decrypt(private_key, ciphertext):
+      d, n = private_key
+      plain = [chr((char ** d) % n) for char in ciphertext]
+      return ''.join(plain)
+  
+  public, private = generate_keys()
+  print("Public Key:", public)
+  print("Private Key:", private)
+  message = input("Enter message: ")
+  cipher = encrypt(public, message)
+  print("Encrypted message:", cipher)
+  plain = decrypt(private, cipher)
+  print("Decrypted message:", plain)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f25() {
+      const txt = `def power(base, exp, mod):
+      result = 1
+      for _ in range(exp):
+          result = (result * base) % mod
+      return result
+  
+  p = 23
+  g = 5
+  
+  print("Public parameters: p =", p, ", g =", g)
+  a = 6
+  b = 15
+  
+  A = power(g, a, p)
+  B = power(g, b, p)
+  
+  print("Alice sends:", A)
+  print("Bob sends:", B)
+  
+  alice_secret = power(B, a, p)
+  bob_secret = power(A, b, p)
+  
+  print("Alice's shared secret:", alice_secret)
+  print("Bob's shared secret:", bob_secret)
+  
+  print("\nSimulating Man-In-The-Middle Attack...")
+  
+  e1 = 7
+  e2 = 9
+  
+  fakeB = power(g, e1, p)
+  fakeA = power(g, e2, p)
+  
+  alice_secret_with_eve = power(fakeB, a, p)
+  bob_secret_with_eve = power(fakeA, b, p)
+  
+  print("Alice's secret with Eve:", alice_secret_with_eve)
+  print("Bob's secret with Eve:", bob_secret_with_eve)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f26() {
+      const txt = `import hashlib
+  
+  def hash_message(message):
+      return hashlib.sha256(message.encode()).hexdigest()
+  
+  def sign_message(private_key, message_hash):
+      return (int(message_hash, 16) ** private_key[0]) % private_key[1]
+  
+  def verify_signature(public_key, signature, original_message_hash):
+      decrypted_hash = (signature ** public_key[0]) % public_key[1]
+      return decrypted_hash == int(original_message_hash, 16)
+  
+  public_key = (17, 3233)
+  private_key = (2753, 3233)
+  
+  message = input("Enter the message: ")
+  message_hash = hash_message(message)
+  print("Hashed message:", message_hash)
+  signature = sign_message(private_key, message_hash)
+  print("Digital Signature:", signature)
+  is_verified = verify_signature(public_key, signature, message_hash)
+  print("Signature Verified:", is_verified)
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+    function f27() {
+      const txt = `from cryptography.hazmat.primitives.asymmetric import rsa, padding
+  from cryptography.hazmat.primitives import serialization, hashes
+  import base64
+  
+  # Generate RSA key pair (2048 bits)
+  private_key = rsa.generate_private_key(
+      public_exponent=65537,
+      key_size=2048
+  )
+  public_key = private_key.public_key()
+  
+  # Original message
+  msg = "Hello, this is a secure email!"
+  msg_bytes = msg.encode()
+  
+  # Encrypt using public key
+  encrypted = public_key.encrypt(
+      msg_bytes,
+      padding.OAEP(
+          mgf=padding.MGF1(algorithm=hashes.SHA256()),
+          algorithm=hashes.SHA256(),
+          label=None
+      )
+  )
+  
+  # Base64 encode the encrypted message
+  b64_enc = base64.b64encode(encrypted).decode()
+  print("Encrypted Email:\n", b64_enc)
+  
+  # Decrypt using private key
+  decrypted = private_key.decrypt(
+      encrypted,
+      padding.OAEP(
+          mgf=padding.MGF1(algorithm=hashes.SHA256()),
+          algorithm=hashes.SHA256(),
+          label=None
+      )
+  )
+  
+  print("\nDecrypted Email:\n", decrypted.decode())
+  
+  `;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+  
+    }
+  
+  
 
 
 
 
-        
-      
-    </script>
-  </head>
-  <body>
-    <div class="fb">
-      <button class="btn" onclick="f1()">Euclid</button>
-      <button class="btn" onclick="f2()">Letter frequency</button>
-      <button class="btn" onclick="f3()">Ceaser cipher</button>
-      <button class="btn" onclick="f4()">columnnar cipher</button>
-      <button class="btn" onclick="f5()">radix 64</button>
-      <button class="btn" onclick="f6()">rsa</button>
-      <button class="btn" onclick="f7()">diffe hellman</button>
-      <button class="btn" onclick="f8()">digital signature</button>
-      <button class="btn" onclick="f9()">pgp email</button>
- 
-      
-    </div>
-  </body>
+  </script>
+</head>
+
+<body>
+  <h1>cpp codes</h1>
+  <div class="fb">
+
+    <button class="btn" onclick="f1()">Euclid</button>
+    <button class="btn" onclick="f2()">Letter frequency</button>
+    <button class="btn" onclick="f3()">Ceaser cipher</button>
+    <button class="btn" onclick="f4()">columnnar cipher</button>
+    <button class="btn" onclick="f5()">radix 64</button>
+    <button class="btn" onclick="f6()">rsa</button>
+    <button class="btn" onclick="f7()">diffe hellman</button>
+    <button class="btn" onclick="f8()">digital signature</button>
+    <button class="btn" onclick="f9()">pgp email</button>
+  </div>
+  <h1>java codes</h1>
+  <div class="fb">
+
+    <button class="btn" onclick="f10()">Euclid</button>
+    <button class="btn" onclick="f11()">Letter frequency</button>
+    <button class="btn" onclick="f12()">Ceaser cipher</button>
+    <button class="btn" onclick="f13()">columnnar cipher</button>
+    <button class="btn" onclick="f14()">radix 64</button>
+    <button class="btn" onclick="f15()">rsa</button>
+    <button class="btn" onclick="f16()">diffe hellman</button>
+    <button class="btn" onclick="f17()">digital signature</button>
+    <button class="btn" onclick="f18()">pgp email</button>
+  </div>
+  <h1>python codes</h1>
+  <div class="fb">
+
+    <button class="btn" onclick="f19()">Euclid</button>
+    <button class="btn" onclick="f20()">Letter frequency</button>
+    <button class="btn" onclick="f21()">Ceaser cipher</button>
+    <button class="btn" onclick="f22()">columnnar cipher</button>
+    <button class="btn" onclick="f23()">radix 64</button>
+    <button class="btn" onclick="f24()">rsa</button>
+    <button class="btn" onclick="f25()">diffe hellman</button>
+    <button class="btn" onclick="f26()">digital signature</button>
+    <button class="btn" onclick="f27()">pgp email</button>
+  </div>
+</body>
+
 </html>
