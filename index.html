@@ -202,56 +202,60 @@ int main() {
     }
 
 
-
-
-    function f4() {
-      const txt = `// ColumnarCipher.cpp
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-using namespace std;
-
-string encrypt(string message, string key) {
-    int cols = key.length();
-    int rows = ceil((double)message.length() / cols);
-    vector<vector<char>> grid(rows, vector<char>(cols, '\0'));
-    
-    int idx = 0;
-    for (int i = 0; i < rows && idx < message.length(); i++) {
-        for (int j = 0; j < cols && idx < message.length(); j++) {
-            grid[i][j] = message[idx++];
+async function f4() {
+        const txt = `// ColumnarCipher.cpp
+      #include <iostream>
+      #include <string>
+      #include <vector>
+      #include <cmath>
+      using namespace std;
+      
+      string encrypt(string message, string key) {
+          int cols = key.length();
+          int rows = ceil((double)message.length() / cols);
+          vector<vector<char>> grid(rows, vector<char>(cols, '\\0'));
+          
+          int idx = 0;
+          for (int i = 0; i < rows && idx < message.length(); i++) {
+              for (int j = 0; j < cols && idx < message.length(); j++) {
+                  grid[i][j] = message[idx++];
+              }
+          }
+          
+          string encrypted;
+          for (char k : key) {
+              int col = k - '1'; // Assuming key is numeric characters
+              for (int i = 0; i < rows; i++) {
+                  if (grid[i][col] != '\\0') {
+                      encrypted += grid[i][col];
+                  }
+              }
+          }
+          return encrypted;
+      }
+      
+      int main() {
+          string message, key;
+          cout << "Enter message: ";
+          getline(cin, message);
+          cout << "Enter key (e.g. 1234): ";
+          cin >> key;
+          
+          string encrypted = encrypt(message, key);
+          cout << "Encrypted Message: " << encrypted << endl;
+          return 0;
+      }`;
+      
+        try {
+          await navigator.clipboard.writeText(txt);
+          document.body.style.backgroundColor = 'black';
+          console.log('Code copied successfully!');
+        } catch (err) {
+          console.error('Failed to copy: ', err);
         }
-    }
+      }
+
     
-    string encrypted;
-    for (char k : key) {
-        int col = k - '1'; // Assuming key is numeric characters
-        for (int i = 0; i < rows; i++) {
-            if (grid[i][col] != '\0') {
-                encrypted += grid[i][col];
-            }
-        }
-    }
-    return encrypted;
-}
-
-int main() {
-    string message, key;
-    cout << "Enter message: ";
-    getline(cin, message);
-    cout << "Enter key (e.g. 1234): ";
-    cin >> key;
-    
-    string encrypted = encrypt(message, key);
-    cout << "Encrypted Message: " << encrypted << endl;
-    return 0;
-}`;
-      navigator.clipboard.writeText(txt);
-      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
-
-    }
-
     function f5() {
       const txt = `// Radix64.cpp
 #include <iostream>
