@@ -115,6 +115,94 @@ int main() {
       document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
 
     }
+    function f3() {
+      const txt = `#include <iostream>
+#include <string>
+#include <map>
+#include <iomanip>
+#include <cctype>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+// Caesar Cipher Encryption
+string caesar_encrypt(const string &text, int key) {
+    string encrypted_text = "";
+    key %= 26;
+
+    for (char ch : text) {
+        if (isalpha(ch)) {
+            char base = isupper(ch) ? 'A' : 'a';
+            encrypted_text += (char)(((ch - base + key + 26) % 26) + base); // +26 ensures positive mod
+        } else {
+            encrypted_text += ch;
+        }
+    }
+    return encrypted_text;
+}
+
+// Caesar Cipher Decryption
+string caesar_decrypt(const string &ciphertext, int key) {
+    return caesar_encrypt(ciphertext, -key);
+}
+
+// Frequency Analysis
+map<char, double> letter_frequency(const string &text) {
+    map<char, int> freq;
+    int total_letters = 0;
+
+    for (char ch : text) {
+        if (isalpha(ch)) {
+            ch = tolower(ch);
+            freq[ch]++;
+            total_letters++;
+        }
+    }
+
+    map<char, double> frequency_percent;
+    for (auto &pair : freq) {
+        frequency_percent[pair.first] = (round((pair.second * 10000.0 / total_letters)) / 100.0); // rounded to 2 decimals
+    }
+
+    return frequency_percent;
+}
+
+// Display frequency analysis
+void display_frequency(const map<char, double>& freq) {
+    for (const auto &pair : freq) {
+        cout << pair.first << ": " << fixed << setprecision(2) << pair.second << "%\n";
+    }
+}
+
+int main() {
+    string message = "India is the best country";
+    int key = 3;
+
+    string encrypted_message = caesar_encrypt(message, key);
+    cout << "Original Message: " << message << endl;
+    cout << "Encrypted Message: " << encrypted_message << endl;
+
+    string decrypted_message = caesar_decrypt(encrypted_message, key);
+    cout << "Decrypted Message: " << decrypted_message << endl;
+
+    cout << "\nFrequency Analysis (Before Encryption):" << endl;
+    map<char, double> freq_before = letter_frequency(message);
+    display_frequency(freq_before);
+
+    cout << "\nFrequency Analysis (After Encryption):" << endl;
+    map<char, double> freq_after = letter_frequency(encrypted_message);
+    display_frequency(freq_after);
+
+    return 0;
+}
+`;
+      navigator.clipboard.writeText(txt);
+      document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+
+    }
+
+
+
 
     function f4() {
       const txt = `// ColumnarCipher.cpp
